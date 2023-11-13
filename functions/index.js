@@ -1,7 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import express from 'express';
 import cors from 'cors';
-import {  createUser, login } from "./src/recipes.js";
+import {  createUser, login } from "./src/users.js";
 import { getAllRecipes, createRecipe } from "./src/recipes.js";
 import { isAuthenticated } from "./src/middleware.js";
 
@@ -18,4 +18,4 @@ app.get('/recipes', getAllRecipes);
 app.post('/recipes',isAuthenticated, createRecipe);
 // app.patch('/recipes/:recipeId', updateRecipe);
 
-export const api = onRequest(app);
+export const api = onRequest({ maxInstances: 10 }, app);
